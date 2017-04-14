@@ -3,10 +3,10 @@ function Application() {
      <div>
        <h1>Hello from React</h1>
        <p>
-        I was rendered from the Application compontent!
+        I was rendered from the Application component!
        </p>
      </div>
     );
 }
 
-ReactDOM.render(<Application/>, document.getElementById('container'));
+ReactDOM.render(<Application/>,document.getElementById('container1'));
