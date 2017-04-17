@@ -18,6 +18,7 @@ var playersArr = [
      id: 3
     }
 ]
+
 function Header(props){
   return (
     <div className="header">
@@ -28,23 +29,22 @@ function Header(props){
 
 
 function ScoreBoardApp(props) {
+//iterate through player objs in players array using the .map function
+  //key is a React thing / iterator to indicate position in the array
+  return (
 
-return (
+    <div className="scoreboard">
 
-  <div className="scoreboard">
+      <Header title={props.title} />
+        <div className="players">
 
-    <Header title={props.title} />
-    <div className="players">
-    {props.playersArray.map(function(player)
-    {
-     return <Player name={player.name} score={player.score} key={player.id}/>
-    })}
-
-
+        {props.playersArray.map(function(player)
+        {
+         return <Player name={player.name} score={player.score} key={player.id}/>
+        })}
+        </div>
     </div>
-  </div>
-
-);
+  );
 }
 Header.propTypes = {
   title: React.PropTypes.string.isRequired,
@@ -55,18 +55,31 @@ Header.propTypes = {
 var Counter = React.createClass({
   propTypes: {
 
+
   },
   getInitialState: function(){
+    console.log("getting state for player");
      return {
-     score: 0,
+     score: this.props.initialScore,
      }
+  },
+  incrementScore: function(e) {
+    this.setState({
+      score: (this.state.score + 1),
+    })
+  },
+  decrementScore: function(e) {
+    console.log("in decrement");
+    this.setState({
+      score: (this.state.score - 1),
+    })
   },
  render: function() {
        return (
            <div className="counter">
-             <button className="counter-action decrement"> - </button>
+             <button className="counter-action decrement" onClick={this.decrementScore}> - </button>
              <div className="counter-score"> {this.state.score}</div>
-             <button className="counter-action increment"> + </button>
+             <button className="counter-action increment" onClick={this.incrementScore}> + </button>
            </div>
        );
 
@@ -77,19 +90,19 @@ var Counter = React.createClass({
 
 // Counter component class ends ---------------------------------------
 
-Counter.propTypes = {
 
-};
-
+//receives player.name player.score and player.id as props
 function Player(props)
 {
+   console.log(props.name);
   return (
     <div className="player">
             <div className="player-name">
               {props.name}
             </div>
            <div className="player-score">
-           <Counter  />
+
+           <Counter initialScore={props.score}/>
           </div>
     </div>
   );
@@ -97,7 +110,7 @@ function Player(props)
 
 Player.propTypes = {
   name: React.PropTypes.string.isRequired,
-  score: React.PropTypes.number.isRequired,
+  score: React.PropTypes.number.isRequired
 };
 
 Application.propTypes = {
